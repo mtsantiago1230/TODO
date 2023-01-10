@@ -1,28 +1,35 @@
 import React from 'react';
 
-function useLocalStorage(itemName, initialValue) {
-
+function useLocalStorage(itemName, initialValue)
+{
+  //-- estado de error, carga y 
   const [error, setError] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
-  const [item, setItem] = React.useState(initialValue);
+  const [todos, setTodos] = React.useState(initialValue);
 
-  //-- simular api
   React.useEffect(() => {
+    console.log("Obtenemos Datos del useEffect")
+    //-- simular api
     setTimeout(() => {
       try {
+        //-- buscamos key en el localStorage
         const localStorageItem = localStorage.getItem(itemName);
         let parsedItem;
         
+        //-- si no existe la key creamos una en el localStorage
         if (!localStorageItem) {
           localStorage.setItem(itemName, JSON.stringify(initialValue));
           parsedItem = initialValue;
-        } else {
-          parsedItem = JSON.parse(localStorageItem);
         }
-
-        setItem(parsedItem);
+        else
+          parsedItem = JSON.parse(localStorageItem);
+        
+        //-- seteamos los todo
+        setTodos(parsedItem);
+        //-- quitamos pantalla de carga
         setLoading(false);
       } catch(error) {
+        //-- seteamos el error
         setError(error);
       }
     }, 1000);
@@ -30,19 +37,21 @@ function useLocalStorage(itemName, initialValue) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   
-  const saveItem = (newItem) => {
+  //-- funcion para guardar todos
+  const saveTodo = (todos) => {
     try {
-      const stringifiedItem = JSON.stringify(newItem);
-      localStorage.setItem(itemName, stringifiedItem);
-      setItem(newItem);
+      const data = JSON.stringify(todos);
+      localStorage.setItem(itemName, data);
+      setTodos(todos);
     } catch(error) {
+      //-- seteamos el error
       setError(error);
     }
   };
 
   return {
-    item,
-    saveItem,
+    todos,
+    saveTodo,
     loading,
     error,
   };

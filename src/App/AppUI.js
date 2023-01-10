@@ -19,9 +19,9 @@ function AppUI()
     completeTodo,
     deleteTodo,
     openModal,
-    setOpenModal,
+    setOpenModal
   } = React.useContext(TodoContext); //-- datos obtenidos del provider
-  
+
   return (
     <>
       {/* contador de todos */}
@@ -33,11 +33,11 @@ function AppUI()
       {/* lista de todos */}
       <TodoList>
         {/* en caso de error al traer datos */}
-        {error && <p>Desespérate, hubo un error...</p>}
+        {error && <p>Lo siento, hay un error...</p>}
         {/* cuando este trayendo datos */}
-        {loading && <><Skeleton count={10} /><p>Estamos cargando, no desesperes...</p><Skeleton count={10} /></>}
+        {loading && <><Skeleton count={10} /><p>Estamos cargando...</p><Skeleton count={10} /></>}
         {/* cuando no existan todos */}
-        {(!loading && !searchedTodos.length) && <p>¡Crea tu primer TODO!</p>}
+        {(!loading && !searchedTodos.length) && <p>¡Crea el primer TODO!</p>}
         {/* for con todos */}
         {searchedTodos.map(todo => (
           <TodoItem

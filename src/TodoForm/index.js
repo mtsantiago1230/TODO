@@ -1,41 +1,46 @@
 import React from 'react';
-import { TodoContext } from '../TodoContext';
+import { TodoContext,TodoContextModal } from '../TodoContext';
 import './TodoForm.css';
 
-function TodoForm() {
-  // Creamos un estado para nuestro nuevo TODO
+function TodoForm()
+{
+  //-- creamos un estado para el nuevo todo
   const [newTodoValue, setNewTodoValue] = React.useState('');
-  // Desestructuramos las funciones que necesitamos para añadir un TODO y cerrar nuestro modal
+
   const {
     addTodo,
     setOpenModal,
-  } = React.useContext(TodoContext);
+    totalTodos
+  } = React.useContext(TodoContext); //-- datos obtenidos del provider
+
+  const {
+    valueModal,
+  } = React.useContext(TodoContextModal); //-- datos obtenidos del provider
   
-  // Creamos una función para actualizar el estado de nuestro nuevo TODO
+  //-- funcion para actualizar el estado de nuevo todo
   const onChange = (event) => {
     setNewTodoValue(event.target.value);
   };
   
-  // Función para cerrar el modal
+  //-- funcion para cerrar el modal
   const onCancel = () => {
     setOpenModal(false);
   };
   
-  // Función para agregar nuestro nuevo TODO
+  //-- funcion para agregar nuevo todo
   const onSubmit = (event) => {
-    // prevent default para evitar recargar la página
     event.preventDefault();
-    // Utilizamos nuestra función para añadir nuestro TODO
+    //-- agregamos nuevo TODO
     addTodo(newTodoValue);
-    // Cerramos nustro modal
-    setOpenModal(false);
-    // También estaría bien resetear nuestro formulario
+    //-- cerramos modal
+    onCancel();
+    //-- seteamos en blanco el input
     setNewTodoValue('')
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <label>Escribe tu nuevo TODO</label>
+      <label>#{totalTodos+1}. {valueModal} - Escribe tu nuevo TODO</label>
       <textarea
         value={newTodoValue}
         onChange={onChange}
