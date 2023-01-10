@@ -1,10 +1,11 @@
-import React from 'react';
 import './TodoList.css'
 
-function TodoList(props) {
+function TodoList(props)
+{
   return (
     <section>
       <ul>
+        {/* children viene siendo los li que estan en <TodoItem/> */}
         {props.children}
       </ul>
     </section>

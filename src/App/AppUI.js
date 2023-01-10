@@ -7,8 +7,11 @@ import { TodoItem } from '../TodoItem';
 import { TodoForm } from "../TodoForm";
 import { CreateTodoButton } from '../CreateTodoButton';
 import { Modal } from '../Modal';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
-function AppUI() {
+function AppUI()
+{
   const {
     error,
     loading,
@@ -17,18 +20,25 @@ function AppUI() {
     deleteTodo,
     openModal,
     setOpenModal,
-  } = React.useContext(TodoContext);
+  } = React.useContext(TodoContext); //-- datos obtenidos del provider
   
   return (
-    <React.Fragment>
+    <>
+      {/* contador de todos */}
       <TodoCounter />
+
+      {/* barra de busqueda de todos */}
       <TodoSearch />
 
+      {/* lista de todos */}
       <TodoList>
+        {/* en caso de error al traer datos */}
         {error && <p>Desespérate, hubo un error...</p>}
-        {loading && <p>Estamos cargando, no desesperes...</p>}
+        {/* cuando este trayendo datos */}
+        {loading && <><Skeleton count={10} /><p>Estamos cargando, no desesperes...</p><Skeleton count={10} /></>}
+        {/* cuando no existan todos */}
         {(!loading && !searchedTodos.length) && <p>¡Crea tu primer TODO!</p>}
-        
+        {/* for con todos */}
         {searchedTodos.map(todo => (
           <TodoItem
             key={todo.text}
@@ -40,16 +50,18 @@ function AppUI() {
         ))}
       </TodoList>
 
-      {!!openModal && (
+      {/* modal de crear todos */}
+      {openModal && (
 				<Modal>
 					<TodoForm />
 				</Modal>
 			)}
 
+      {/* btn de crear todos */}
       <CreateTodoButton
         setOpenModal={setOpenModal}
       />
-    </React.Fragment>
+    </>
   );
 }
 

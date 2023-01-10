@@ -1,7 +1,10 @@
-import React from 'react';
 import './TodoItem.css';
 
-function TodoItem(props) {
+function TodoItem(props)
+{
+  //-- creamos <li> de todos
+  //-- validamos si esta completo algun todo para estilizar
+  //-- adjuntamos funciones para btnes
   return (
     <li className="TodoItem">
       <span
