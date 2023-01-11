@@ -8,7 +8,7 @@ function useLocalStorage(itemName, initialValue)
   const [todos, setTodos] = React.useState(initialValue);
 
   React.useEffect(() => {
-    console.log("Obtenemos Datos del useEffect")
+    // console.log("Obtenemos Datos del useEffect")
     //-- simular api
     setTimeout(() => {
       try {
